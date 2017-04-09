@@ -1,0 +1,26 @@
+{
+  "name": "fetch-fetchy",
+  "version": "1.0.0",
+  "description": "A simplified fetch api",
+  "main": "fetch-fetchy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrice727/fetch-fetchy.git"
+  },
+  "keywords": [
+    "fetch",
+    "api",
+    "http",
+    "get",
+    "request"
+  ],
+  "author": "adrice727@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adrice727/fetch-fetchy/issues"
+  },
+  "homepage": "https://github.com/adrice727/fetch-fetchy#readme"
+}
