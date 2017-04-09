@@ -1,6 +1,5 @@
 /** Constants */
-let origin = window.location.origin;
-const url = R.contains('localhost', origin) ? 'http://localhost:3001' : 'https://ibs-dev-server.herokuapp.com';
+let url = window.location.origin;
 const defaultHeaders = { 'Content-Type': 'application/json' };
 const defaultOptions = { json: true };
 /** ********* */
@@ -9,7 +8,7 @@ const defaultOptions = { json: true };
 const headers = (customHeaders): Headers => Object.assign({}, defaultHeaders, customHeaders);
 
 /** Check for external route containing http/https */
-const getURL = (route)=> route.includes('http') ? route : `${apiUrl}/${route}`;
+const getURL = (route) => route.includes('http') ? route : `${url}/${route}`;
 
 /**
  * Set a custom base url
@@ -42,32 +41,32 @@ const setOptions = (options) => {
 }
 
 /** Parse a response based on the type */
-const parseResponse = (response: Response): * => {
+const parseResponse = (response): * => {
   const contentType = (response.headers.get('content-type') || '')).split(';')[0]
-  if (contentType === 'application/json') {
-    return response.json();
-  } else if ( contentType === 'multipart/form-data') {
-    return response.formData();
-  } else if (contentType === 'text/html') {
-    return response.text();
-  } else if (contentType === 'application/octet-stream') {
-    return response.blob();
-  }
+if (contentType === 'application/json') {
+  return response.json();
+} else if (contentType === 'multipart/form-data') {
+  return response.formData();
+} else if (contentType === 'text/html') {
+  return response.text();
+} else if (contentType === 'application/octet-stream') {
+  return response.blob();
+}
 };
 
 /** Check for API-level errors */
-const checkStatus = (response: Response): PromiseLike =>
-  new Promise((resolve: PromiseLike, reject: PromiseLike): Promise => {
+const checkStatus = (response) =>
+  new Promise((resolve, reject) => {
     if (response.ok) {
       return resolve(response);
     }
     parseResponse(response)
-      .then(({ message }: { message: string }): PromiseLike => reject(new Error(message)))
+      .then(({ message }: { message: string }) => reject(new Error(message)))
       .catch(reject);
   });
 
 /** Create a new Request object */
-const request = (method, route, data = null, options = {}): Request => {
+const request = (method, route, data = null, options = {}) => {
   const options = Object.assign({}, defaultOptions, options);
   let body;
   if (data) {
@@ -83,8 +82,8 @@ const request = (method, route, data = null, options = {}): Request => {
 };
 
 /** Execute a request using fetch */
-const execute = (method, route, body, options): Promise =>
-  new Promise((resolve: PromiseLike, reject: PromiseLike) => {
+const execute = (method, route, body, options) =>
+  new Promise((resolve, reject) => {
     fetch(request(method, route, body, options))
       .then(checkStatus)
       .then(parseResponse)
@@ -101,12 +100,12 @@ const del = (route) => execute('delete', route);
 
 /** Exports */
 module.exports = {
-get,
-post,
-put,
-patch,
-del,
-setUrl,
-setHeaders,
-setOptions,
+  get,
+  post,
+  put,
+  patch,
+  del,
+  setUrl,
+  setHeaders,
+  setOptions,
 };

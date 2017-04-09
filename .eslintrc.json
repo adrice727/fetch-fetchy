@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "airbnb"
+  ],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "strict": 0,
+    "padded-blocks": 0,
+    "no-unused-expressions": [2, { "allowTernary": true, "allowShortCircuit": true }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "max-len": ["error", 150],
+    "no-confusing-arrow": 0
+  }
+}
