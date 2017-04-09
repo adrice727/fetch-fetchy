@@ -1,9 +1,10 @@
-### fetch fetchy - A simplified fetch API
+### ƒetch ƒetchy
+#### A simplified fetch API
 
  - A method for each HTTP verb
  - Better error handling
  - Built-in response parsing
- - Options to customize with you API
+ - Options to customize for you API
 
 #### Install
 ```bash
