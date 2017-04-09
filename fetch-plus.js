@@ -1,6 +1,3 @@
-import R from 'ramda';
-import { loadAuthToken as jwt } from './localStorage';
-
 /** Constants */
 let origin = window.location.origin;
 const url = R.contains('localhost', origin) ? 'http://localhost:3001' : 'https://ibs-dev-server.herokuapp.com';
