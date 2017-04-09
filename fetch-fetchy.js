@@ -1,14 +1,14 @@
 /** Constants */
 let url = window.location.origin;
-const defaultHeaders = { 'Content-Type': 'application/json' };
-const defaultOptions = { json: true };
+let defaultHeaders = { 'Content-Type': 'application/json' };
+let defaultOptions = { json: true, mode: 'cors' };
 /** ********* */
 
 /** Generator headers for a request */
-const headers = (customHeaders): Headers => Object.assign({}, defaultHeaders, customHeaders);
+const headers = (customHeaders = {}) => Object.assign({}, defaultHeaders, customHeaders);
 
 /** Check for external route containing http/https */
-const getURL = (route) => route.includes('http') ? route : `${url}/${route}`;
+const getURL = (route) => route.includes('http') ? route : `${url}${route}`;
 
 /**
  * Set a custom base url
@@ -41,17 +41,17 @@ const setOptions = (options) => {
 }
 
 /** Parse a response based on the type */
-const parseResponse = (response): * => {
-  const contentType = (response.headers.get('content-type') || '')).split(';')[0]
-if (contentType === 'application/json') {
-  return response.json();
-} else if (contentType === 'multipart/form-data') {
-  return response.formData();
-} else if (contentType === 'text/html') {
-  return response.text();
-} else if (contentType === 'application/octet-stream') {
-  return response.blob();
-}
+const parseResponse = (response) => {
+  const contentType = (response.headers.get('content-type') || '').split(';')[0];
+  if (contentType === 'application/json') {
+    return response.json();
+  } else if (contentType === 'multipart/form-data') {
+    return response.formData();
+  } else if (contentType === 'text/html') {
+    return response.text();
+  } else if (contentType === 'application/octet-stream') {
+    return response.blob();
+  }
 };
 
 /** Check for API-level errors */
@@ -61,22 +61,24 @@ const checkStatus = (response) =>
       return resolve(response);
     }
     parseResponse(response)
-      .then(({ message }: { message: string }) => reject(new Error(message)))
+      .then(reject)
       .catch(reject);
   });
 
 /** Create a new Request object */
-const request = (method, route, data = null, options = {}) => {
-  const options = Object.assign({}, defaultOptions, options);
+const request = (method, route, data = null, requestOptions = {}) => {
+  const options = Object.assign({}, defaultOptions, requestOptions);
   let body;
   if (data) {
     body = options.json ? JSON.stringify(data) : body;
+  } else {
+    body = {};
   }
-  const body = data && JSON.stringify(data);
+  // const body = data && JSON.stringify(data);
   return new Request(getURL(route), {
     method: method.toUpperCase(),
     mode: 'cors',
-    headers: new Headers(headers(requiresAuth)),
+    headers: new Headers(headers(options.headers)),
     body,
   });
 };
