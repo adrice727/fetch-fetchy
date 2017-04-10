@@ -2,6 +2,12 @@
 let url = window.location.origin;
 let defaultHeaders = { 'Content-Type': 'application/json' };
 let defaultOptions = { json: true, mode: 'cors' };
+let defaultOptions = {
+  json: true,
+  url: window.location.origin,
+  headers: { 'Content-Type': 'application/json' };
+  mode: 'cors'
+}
 /** ********* */
 
 /** Generator headers for a request */
@@ -11,36 +17,10 @@ const headers = (customHeaders = {}) => Object.assign({}, defaultHeaders, custom
 const getURL = (route) => route.includes('http') ? route : `${url}${route}`;
 
 /**
- * Set a custom base url
- * @param {String} customUrl
- * @returns {String}
+ * Parse a reponse based on the type
+ * @param {Response} response
+ * @returns {Promise} <resolve: *, reject: Error>
  */
-const setUrl = (customUrl) => {
-  url = customUrl;
-  return customUrl;
-}
-
-/**
- * Set default headers
- * @param {Object} defaultHeaders
- * @returns {Object}
- */
-const setHeaders = (headers) => {
-  defaultHeaders = headers;
-  return headers;
-}
-
-/**
- * Set default options
- * @param {Object} options
- * @returns {Object}
- */
-const setOptions = (options) => {
-  defaultOptions = options;
-  return options;
-}
-
-/** Parse a response based on the type */
 const parseResponse = (response) => {
   const contentType = (response.headers.get('content-type') || '').split(';')[0];
   if (contentType === 'application/json') {
@@ -54,7 +34,12 @@ const parseResponse = (response) => {
   }
 };
 
-/** Check for API-level errors */
+
+/**
+ * Check for API-level errors
+ * @param {Response} response
+ * @returns {Promise} <resolve: Response, reject: Error>
+ */
 const checkStatus = (response) =>
   new Promise((resolve, reject) => {
     if (response.ok) {
@@ -65,7 +50,14 @@ const checkStatus = (response) =>
       .catch(reject);
   });
 
-/** Create a new Request object */
+/**
+ * Create a new Request object
+ * @param {String} method
+ * @param {String} route
+ * @param {*} [data]
+ * @param {Object} [options]
+ * @returns {Request}
+ */
 const request = (method, route, data = null, requestOptions = {}) => {
   const options = Object.assign({}, defaultOptions, requestOptions);
   let body;
@@ -83,7 +75,13 @@ const request = (method, route, data = null, requestOptions = {}) => {
   });
 };
 
-/** Execute a request using fetch */
+/**
+ * Execute a request using fetch
+ * @param {String} method
+ * @param {String} route
+ * @param {*} [body]
+ * @param {Object} [options]
+ */
 const execute = (method, route, body, options) =>
   new Promise((resolve, reject) => {
     fetch(request(method, route, body, options))
@@ -93,21 +91,71 @@ const execute = (method, route, body, options) =>
       .catch(reject);
   });
 
-/** HTTP Methods */
+/** Exports */
+
+/**
+ * Update the default configuration for all requests
+ * @param {Object} options
+ * @param {Boolean} [json]
+ * @param {String} [url]
+ * @param {Object} [headers]
+ * @param {String} [mode]
+ * @returns Object
+ */
+const configure = (options) => {
+  const updatedOptions = Object.assign({}, defaultOptions, options);
+  let defaultOptions = updatedOptions;
+  return updatedOptions;
+}
+
+/**
+ * Make a GET request
+ * @param {String} route
+ * @param {Object} [options]
+ * @returns {Promise} <resolve: Response, reject: Error>
+ */
 const get = (route, options) => execute('get', route, options);
+
+/**
+ * Make a POST request
+ * @param {String} route
+ * @param {String} [body]
+ * @param {Object} [options]
+ * @returns {Promise} <resolve: Response, reject: Error>
+ */
 const post = (route, body, options) => execute('post', route, body, options);
+
+/**
+ * Make a PUT request
+ * @param {String} route
+ * @param {String} [body]
+ * @param {Object} [options]
+ * @returns {Promise} <resolve: Response, reject: Error>
+ */
 const put = (route, body, options) => execute('put', route, body, options);
+
+/**
+ * Make a PATCH request
+ * @param {String} route
+ * @param {String} [body]
+ * @param {Object} [options]
+ * @returns {Promise} <resolve: Response, reject: Error>
+ */
 const patch = (route, body, options) => execute('patch', route, body, options);
+
+/**
+ * Make a DELETE request
+ * @param {String} route
+ * @param {Object} [options]
+ * @returns {Promise} <resolve: Response, reject: Error>
+ */
 const del = (route) => execute('delete', route);
 
-/** Exports */
 module.exports = {
+  configure,
   get,
   post,
   put,
   patch,
   del,
-  setUrl,
-  setHeaders,
-  setOptions,
 };
