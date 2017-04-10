@@ -1,4 +1,5 @@
 ![logo](https://github.com/adrice727/fetch-fetchy/raw/develop/logo.png)
+
 ### A simplified fetch API
 
 *→ Methods for each HTTP verb means no building request objects*
