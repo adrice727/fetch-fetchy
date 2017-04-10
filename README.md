@@ -70,20 +70,19 @@ const options = {
 configure(options);
 ```
 
-#### API Methods
-→  `get`: Make a `GET` request
+### API Methods
+####`get(route: String, options: Object) => Promise`
 
-→  `post`: Make a `POST` request
+#### `post(route: String, body: *, options: Object) => Promise`
 
-→  `put`: Make a `PUT` request
+#### `put(route: String, body: *, options: Object) => Promise`
 
-→  `patch`: Make a `PATCH` request
+#### `patch(route: String, body: *, options: Object) => Promise`
 
-→  `del`: Make a `DELETE` request
+#### `del(route: String, options: Object) => Promise`
 
-→ `configure`: Configure `fetch-fetchy`
+#### `configure(options: Object) => Object`
 
-*See [source](https://github.com/adrice727/fetch-fetchy/blob/develop/fetch-fetchy.js#L94) for full details*
 
 
 
