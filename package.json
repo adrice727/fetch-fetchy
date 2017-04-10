@@ -1,6 +1,6 @@
 {
   "name": "fetch-fetchy",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simplified fetch api",
   "main": "fetch-fetchy.js",
   "scripts": {
