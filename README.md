@@ -76,20 +76,14 @@ configure(options);
 ```
 
 ### API Methods
-#### `get(route: String, options: Object) => Promise`
+`get(route: String, options: Object) => Promise`
 
-#### `post(route: String, body: *, options: Object) => Promise`
+`post(route: String, body: *, options: Object) => Promise`
 
-#### `put(route: String, body: *, options: Object) => Promise`
+`put(route: String, body: *, options: Object) => Promise`
 
-#### `patch(route: String, body: *, options: Object) => Promise`
+ `patch(route: String, body: *, options: Object) => Promise`
 
-#### `del(route: String, options: Object) => Promise`
+ `del(route: String, options: Object) => Promise`
 
-#### `configure(options: Object) => Object`
-
-
-
-
-
-
+`configure(options: Object) => Object`
