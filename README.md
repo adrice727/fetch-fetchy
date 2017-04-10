@@ -1,16 +1,16 @@
-![logo](./logo.png)
-#### A simplified fetch API
+![logo](https://github.com/adrice727/fetch-fetchy/raw/develop/logo.png)
+### A simplified fetch API
 
- - A method for each HTTP verb
- - Better error handling
- - Built-in response parsing
- - Options to customize for you API
+*→ Methods for each HTTP verb means no building request objects*
+*→ API-level error handling means no checking status codes*
+*→ Built-in response parsing means no additional checks and method calls*
+ *→ Optional one-time configuration means easy integration for your API*
 
-#### Install
+### Install
 ```bash
 $ npm i --save fetch-fetchy
 ```
-#### Basic Usage
+### Basic Usage
 ```
 import { get, post } from 'fetch-fetchy';
 
@@ -30,7 +30,7 @@ get('/user/hs9hsbs7')
 ```
 
 
-#### Configuration
+### Configuration
 The default configuration is as follows:
 ```javascript
 {
@@ -41,21 +41,23 @@ The default configuration is as follows:
 }
 ```
 
-**`json`**
+#### **`json`**
 
 *If set to `true`, request data will automatically be converted to JSON.*
 
-**`url`**
+#### **`url`**
 
 *The `url` to be used for `api` requests.  When a route begins with `/`, it is assumed that the request is being made to the application's API.  This means that you can define `/user` as the route instead of `https://myapplicationdomain/user`.*  If you set `url` to `https://someotherdomain` and specify `/user` as the route, the request will be made to `https://someotherdomain/user`.  When the route does not begin with `/`, the full route will be used.
 
-**`headers`**
+#### **`headers`**
 
 The [headers](https://developer.mozilla.org/en-US/docs/Web/API/Request/headers) for requests.
 
- **`mode`**
+#### **`mode`**
 
  The request [mode](https://developer.mozilla.org/en-US/docs/Web/API/Request/mode).
+
+----------
 
 You may override these options for all requests by calling `setOptions()`.  The default options will be overridden using [`Object.assign()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign).  If you wish to apply options for a single request, just pass those options into that request.
 ```
