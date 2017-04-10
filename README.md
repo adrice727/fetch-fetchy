@@ -2,9 +2,12 @@
 ### A simplified fetch API
 
 *→ Methods for each HTTP verb means no building request objects*
+
 *→ API-level error handling means no checking status codes*
+
 *→ Built-in response parsing means no additional checks and method calls*
- *→ Optional one-time configuration means easy integration for your API*
+
+*→ Optional one-time configuration means easy integration for your API*
 
 ### Install
 ```bash
