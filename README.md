@@ -72,10 +72,15 @@ configure(options);
 
 #### API Methods
 →  `get`: Make a `GET` request
+
 →  `post`: Make a `POST` request
+
 →  `put`: Make a `PUT` request
+
 →  `patch`: Make a `PATCH` request
+
 →  `del`: Make a `DELETE` request
+
 → `configure`: Configure `fetch-fetchy`
 
 *See [source](https://github.com/adrice727/fetch-fetchy/blob/develop/fetch-fetchy.js#L94) for full details*
