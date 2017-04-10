@@ -63,7 +63,7 @@ The [headers](https://developer.mozilla.org/en-US/docs/Web/API/Request/headers) 
 
 ----------
 
-You may override these options for all requests by calling `setOptions()`.  The default options will be overridden using [`Object.assign()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign).  If you wish to apply options for a single request, just pass those options into that request.
+You may override these options for all requests by calling `configure()`.  The default options will be overridden using [`Object.assign()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign).  If you wish to apply options for a single request, just pass those options into that request.
 ```
 import { configure } from 'fetch-fetchy';
 /**
