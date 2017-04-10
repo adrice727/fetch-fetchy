@@ -76,7 +76,7 @@ configure(options);
 ```
 
 ### API Methods
-####`get(route: String, options: Object) => Promise`
+#### `get(route: String, options: Object) => Promise`
 
 #### `post(route: String, body: *, options: Object) => Promise`
 
