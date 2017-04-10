@@ -1,4 +1,4 @@
-### ƒetch ƒetchy
+![logo](./logo.png)
 #### A simplified fetch API
 
  - A method for each HTTP verb
