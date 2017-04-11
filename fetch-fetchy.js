@@ -67,20 +67,16 @@
    * @param {Object} [options]
    * @returns {Request}
    */
-  const request = (method, route, data = null, requestOptions = {}) => {
-    const options = Object.assign({}, defaultOptions, requestOptions);
-    let body;
-    if (data) {
-      body = options.json ? JSON.stringify(data) : body;
-    } else {
-      body = {};
-    }
-    return new Request(getURL(route), {
+  const request = (method, route, data = null, definedOptions = {}) => {
+    const options = Object.assign({}, defaultOptions, definedOptions);
+    const body = () => data ? { body: options.json ? JSON.stringify(data) : data } : {};
+    const baseOptions = {
       method: method.toUpperCase(),
       mode: options.mode,
       headers: new Headers(headers(options.headers)),
-      body,
-    });
+    };
+    const requestOptions = Object.assign({}, baseOptions, body());
+    return new Request(getURL(route), requestOptions);
   };
 
   /**
