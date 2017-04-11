@@ -67,20 +67,16 @@
    * @param {Object} [options]
    * @returns {Request}
    */
-  const request = (method, route, data = null, requestOptions = {}) => {
-    const options = Object.assign({}, defaultOptions, requestOptions);
-    let body;
-    if (data) {
-      body = options.json ? JSON.stringify(data) : body;
-    } else {
-      body = {};
-    }
-    return new Request(getURL(route), {
+  const request = (method, route, data = null, definedOptions = {}) => {
+    const options = Object.assign({}, defaultOptions, validateOptions(definedOptions));
+    const body = () => data ? { body: options.json ? JSON.stringify(data) : data } : {};
+    const baseOptions = {
       method: method.toUpperCase(),
       mode: options.mode,
       headers: new Headers(headers(options.headers)),
-      body,
-    });
+    };
+    const requestOptions = Object.assign({}, baseOptions, body());
+    return new Request(getURL(route), requestOptions);
   };
 
   /**
@@ -99,6 +95,29 @@
         .catch(reject);
     });
 
+  /**
+   * Validate options for configure() or a single request
+   * @param {Object} options
+   * @returns {Object}
+   */
+  const validateOptions = (options) => {
+    const configurableOptions = ['json', 'url', 'headers', 'mode'];
+    const validation = Object.keys(options).reduce((acc, k) => {
+      if (configurableOptions.includes(k)) {
+        acc.options[k] = options[k];
+      } else {
+        acc.errors.push(k)
+      }
+      return acc;
+    }, { options: {}, errors: [] });
+    const { errors } = validation;
+    if (errors.length) {
+      const warning = `ƒetch ƒetchy: ${errors.join(', ')} ${errors.length > 1 ? 'are' : 'is'} not configurable.`
+      console.warn(warning);
+    };
+    return validation.options;
+  };
+
   /** Exports */
 
   /**
@@ -111,21 +130,7 @@
    * @returns Object
    */
   const configure = (options) => {
-    const configurableOptions = ['json', 'url', 'headers', 'mode'];
-    const definedOptions = Object.keys(options).reduce((acc, k) => {
-      if (configurableOptions.includes(k)) {
-        acc.update[k] = options[k];
-      } else {
-        acc.errors.push(k)
-      }
-      return acc;
-    }, { update: {}, errors: [] });
-    const { update, errors } = definedOptions;
-    if (errors.length) {
-      const warning = `ƒetch ƒetchy: ${errors.join(', ')} ${errors.length > 1 ? 'are' : 'is'} not configurable.`
-      console.warn(warning);
-    };
-    const updatedOptions = Object.assign({}, defaultOptions, update);
+    const updatedOptions = Object.assign({}, defaultOptions, validateOptions(options));
     defaultOptions = updatedOptions;
     return updatedOptions;
   }
